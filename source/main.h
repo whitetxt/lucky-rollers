@@ -21,12 +21,6 @@
 #include <time.h>
 #include <math.h>
 
-#include "colours.h"
-#include "math.h"
-#include "draw.h"
-
-#include "logic.h"
-
 typedef enum sprite {
 	SPRITE_FADE = 0,
 } sprite;
@@ -45,6 +39,14 @@ typedef struct line {
 	float m, c;
 } line;
 
+#include "colours.h"
+#include "math.h"
+#include "draw.h"
+#include "transitions.h"
+
+#include "title.h"
+#include "mainmenu.h"
+
 extern C3D_RenderTarget *top;
 extern C3D_RenderTarget *bottom;
 extern C2D_Font font;
@@ -54,6 +56,8 @@ extern game_state state;
 
 extern int frame_num;
 extern int since_state_change;
+
+extern int transition_timer;
 
 extern bool paused;
 
@@ -66,6 +70,7 @@ bool inside_rect(point p, point top_left, int w, int h);
 circlePosition readCStick(int dead_zone);
 float sign(point p1, point p2, point p3);
 int seconds(float secs);
-void setState(game_state new_state, bool transition, int frames);
+void setState(game_state new_state);
+void transitionState(game_state new_state, transition_type type, int frames, lerp_function trans_lerp);
 float dist(point a, point b);
 float dist_sq(point a, point b);

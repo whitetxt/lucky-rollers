@@ -2,6 +2,8 @@
 
 double lerp(double x, lerp_function func) {
 	switch (func) {
+		case LINEAR:
+			return x;
 		case EASE_IN_SINE:
 			return 1 - cos((x * M_PI) / 2);
 		case EASE_OUT_SINE:

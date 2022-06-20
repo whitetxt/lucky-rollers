@@ -5,7 +5,10 @@ typedef struct Text {
 	char *text;
 } Text;
 
+extern int selectedMenuOption;
+extern int mainMenuOptions;
+
 void draw_text(char *text, int x, int y);
 void draw_text_colour(char *text, int x, int y, u32 colour);
 void draw_titlescreen();
-void draw_menu();
+void draw_mainmenu();

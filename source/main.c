@@ -14,11 +14,6 @@ game_state state = GAME_STATE_TITLE;
 int frame_num = 0;
 int since_state_change = 0;
 
-int transition_timer = 0;
-int transition_duration = 0;
-bool transition_forwards = true;
-game_state after_transition;
-
 u64 now_time, last_time;
 
 bool paused;
@@ -101,15 +96,18 @@ void spriteInit() {
 	}
 }
 
-inline void setState(game_state new_state, bool transition, int frames) {
-	if (!transition) {
-		state = new_state;
-		since_state_change = 0;
-	} else {
-		transition_timer = 1;
-		transition_duration = frames;
-		after_transition = new_state;
-	}
+inline void setState(game_state new_state) {
+	state = new_state;
+	since_state_change = 0;
+}
+
+inline void transitionState(game_state new_state, transition_type type, int frames, lerp_function trans_lerp) {
+	transition_timer = 1;
+	transition_duration = frames;
+	after_transition = new_state;
+	transition_forwards = true;
+	transition_lerp = trans_lerp;
+	trans_type = type;
 }
 
 inline C2D_Sprite get_sprite(int idx) {
@@ -163,42 +161,16 @@ int main(int argc, char* argv[]) {
 
 		switch (state) {
 			case GAME_STATE_TITLE:
-				draw_titlescreen();
-				titlescreen_logic();
+				titlescreen();
 				break;
 			case GAME_STATE_MAIN_MENU:
-				draw_menu();
-				menu_logic();
+				mainmenu();
 				break;
 			default:
 				break;
 		}
 
-		if (transition_timer > 0) {
-			float percentage = (transition_timer + transition_duration * 0.05f) / (float)transition_duration;
-			if (percentage > 1) {
-				percentage = 1;
-			}
-			double scale = 7.5;
-			percentage = lerp(percentage, EASE_IN_EXPO);
-			float offset = 32 * (scale - (percentage * scale));
-			C2D_SpriteSetPos(get_sprite_ptr(SPRITE_FADE), TOP_SCREEN_WIDTH / 2, TOP_SCREEN_HEIGHT / 2);
-			C2D_SpriteSetScale(get_sprite_ptr(SPRITE_FADE), scale - (percentage * scale), scale - (percentage * scale));
-			C2D_DrawSprite(get_sprite_ptr(SPRITE_FADE));
-			C2D_DrawRectSolid(0, 0, 0, TOP_SCREEN_WIDTH, TOP_SCREEN_HEIGHT / 2 - offset, colour_black);
-			C2D_DrawRectSolid(0, TOP_SCREEN_HEIGHT / 2 + offset, 0, TOP_SCREEN_WIDTH, TOP_SCREEN_HEIGHT / 2, colour_black);
-			C2D_DrawRectSolid(0, 0, 0, TOP_SCREEN_WIDTH / 2 - offset, TOP_SCREEN_HEIGHT, colour_black);
-			C2D_DrawRectSolid(TOP_SCREEN_WIDTH / 2 + offset, 0, 0, TOP_SCREEN_WIDTH / 2, TOP_SCREEN_HEIGHT, colour_black);
-			if (transition_forwards) {
-				transition_timer++;
-			} else {
-				transition_timer--;
-			}
-			if (transition_timer >= transition_duration) {
-				transition_forwards = false;
-				setState(after_transition, false, 0);
-			}
-		}
+		transition();
 
 		C3D_FrameEnd(0);
 		delay();

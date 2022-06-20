@@ -1,4 +1,5 @@
 typedef enum lerp_function {
+	LINEAR,
 	EASE_IN_SINE,
 	EASE_IN_QUAD,
 	EASE_IN_CUBIC,

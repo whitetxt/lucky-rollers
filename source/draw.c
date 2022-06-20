@@ -97,10 +97,3 @@ void draw_text_colour(char *text, int x, int y, u32 colour) {
 	C2D_DrawText(&text_c2d, C2D_WithColor, x - w / 2, y - h / 2, 0, 1, 1, colour);
 	C2D_TextBufDelete(buf);
 }
-
-void draw_titlescreen() {
-	draw_text("Lucky Rollers", TOP_SCREEN_WIDTH / 2, TOP_SCREEN_HEIGHT / 2 - 10 + sin(frame_num / 20.0f) * 10);
-	draw_text_colour("Press any button to start.", TOP_SCREEN_WIDTH / 2, TOP_SCREEN_HEIGHT - 32, C2D_Color32(0, 0, 0, 127 + sin(180 + frame_num / 40.0f) * 50));
-}
-
-void draw_menu() {}
