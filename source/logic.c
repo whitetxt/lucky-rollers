@@ -7,3 +7,7 @@ void titlescreen_logic() {
 		setState(GAME_STATE_MAIN_MENU, true, seconds(2));
 	}
 }
+
+void menu_logic() {
+	u32 kDown = hidKeysDown();
+}

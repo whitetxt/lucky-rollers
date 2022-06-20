@@ -153,25 +153,8 @@ int main(int argc, char* argv[]) {
 	while (aptMainLoop()) {
 		hidScanInput();
 		u32 kDown = hidKeysDown();
-		u32 kHeld = hidKeysHeld();
-		if ((kHeld & KEY_L) && (kHeld & KEY_R)) { // L + R to quit
+		if ((kDown & KEY_L) && (kDown & KEY_R)) { // L + R to quit
 			break; // break in order to return to hbmenu
-		}
-
-		if (kDown & KEY_START) {
-			paused = !paused;
-		}
-
-		if (paused) {
-			C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-			C2D_TargetClear(top, colour_clear);
-			C2D_SceneBegin(top);
-
-			C2D_DrawCircleSolid(50, 50, 0, 15, C2D_Color32(255, 0, 255, 255));
-
-			C3D_FrameEnd(0);
-			delay();
-			continue;
 		}
 
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
@@ -185,6 +168,7 @@ int main(int argc, char* argv[]) {
 				break;
 			case GAME_STATE_MAIN_MENU:
 				draw_menu();
+				menu_logic();
 				break;
 			default:
 				break;
