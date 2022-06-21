@@ -1,1 +1,1 @@
-void mainmenu();
+void mainmenu(bool top);

@@ -34,6 +34,7 @@ void cacheText(C2D_Text t, char *text) {
 	if (found == -1) {
 		int position = num_cached >= MAX_CACHED_TEXT ? MAX_CACHED_TEXT - 1 : num_cached;
 
+		C2D_TextBufDelete(cached[position].t.buf);
 		cached[position].t = t;
 		free(cached[position].text);
 		cached[position].text = strdup(text);
@@ -44,7 +45,6 @@ void cacheText(C2D_Text t, char *text) {
 		}
 	} else if (found != 0) {
 		for (int i = found; i > 0; i--) {
-			free(cached[i].text);
 			cached[i] = cached[i - 1];
 		}
 		cached[0].t = t;

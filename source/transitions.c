@@ -7,7 +7,15 @@ game_state after_transition;
 lerp_function transition_lerp = EASE_IN_EXPO;
 transition_type trans_type = TRANSITION_TYPE_CIRCLE;
 
-void transition() {
+void transition(bool top) {
+	int width, height;
+	if (top) {
+		width = TOP_SCREEN_WIDTH;
+		height = TOP_SCREEN_HEIGHT;
+	} else {
+		width = BOTTOM_SCREEN_WIDTH;
+		height = BOTTOM_SCREEN_HEIGHT;
+	}
 	if (transition_timer > 0) {
 		float percentage = (transition_timer + transition_duration * 0.05f) / (float)transition_duration;
 		if (percentage > 1) {
@@ -25,13 +33,13 @@ void transition() {
 				if (scale_fac < 0.1f) {
 					scale_fac = 0.1f;
 				}
-				C2D_SpriteSetPos(get_sprite_ptr(SPRITE_FADE), TOP_SCREEN_WIDTH / 2, TOP_SCREEN_HEIGHT / 2);
+				C2D_SpriteSetPos(get_sprite_ptr(SPRITE_FADE), width / 2, height / 2);
 				C2D_SpriteSetScale(get_sprite_ptr(SPRITE_FADE), scale_fac, scale_fac);
 				C2D_DrawSprite(get_sprite_ptr(SPRITE_FADE));
-				C2D_DrawRectSolid(0, 0, 0, TOP_SCREEN_WIDTH, TOP_SCREEN_HEIGHT / 2 - offset, colour_black);
-				C2D_DrawRectSolid(0, TOP_SCREEN_HEIGHT / 2 + offset, 0, TOP_SCREEN_WIDTH, TOP_SCREEN_HEIGHT / 2, colour_black);
-				C2D_DrawRectSolid(0, 0, 0, TOP_SCREEN_WIDTH / 2 - offset, TOP_SCREEN_HEIGHT, colour_black);
-				C2D_DrawRectSolid(TOP_SCREEN_WIDTH / 2 + offset, 0, 0, TOP_SCREEN_WIDTH / 2, TOP_SCREEN_HEIGHT, colour_black);
+				C2D_DrawRectSolid(0, 0, 0, width, height / 2 - offset, colour_black);
+				C2D_DrawRectSolid(0, height / 2 + offset, 0, width, height / 2, colour_black);
+				C2D_DrawRectSolid(0, 0, 0, width / 2 - offset, height, colour_black);
+				C2D_DrawRectSolid(width / 2 + offset, 0, 0, width / 2, height, colour_black);
 				if (transition_forwards) {
 					transition_timer++;
 				} else {
@@ -45,7 +53,7 @@ void transition() {
 			case TRANSITION_TYPE_SWIPE_LEFT:
 				scale = 5;
 				percentage = lerp(percentage, transition_lerp);
-				C2D_DrawRectSolid(TOP_SCREEN_WIDTH - (percentage) * TOP_SCREEN_WIDTH, 0, 0, TOP_SCREEN_WIDTH, TOP_SCREEN_HEIGHT, colour_black);
+				C2D_DrawRectSolid(width - (percentage) * width, 0, 0, width, height, colour_black);
 				if (transition_forwards) {
 					transition_timer++;
 				} else {
@@ -60,7 +68,7 @@ void transition() {
 			case TRANSITION_TYPE_SWIPE_RIGHT:
 				scale = 5;
 				percentage = lerp(percentage, transition_lerp);
-				C2D_DrawRectSolid(0, 0, 0, (percentage) * TOP_SCREEN_WIDTH, TOP_SCREEN_HEIGHT, colour_black);
+				C2D_DrawRectSolid(0, 0, 0, (percentage) * width, height, colour_black);
 				if (transition_forwards) {
 					transition_timer++;
 				} else {
@@ -75,7 +83,7 @@ void transition() {
 			case TRANSITION_TYPE_SWIPE_UP:
 				scale = 5;
 				percentage = lerp(percentage, transition_lerp);
-				C2D_DrawRectSolid(0, TOP_SCREEN_HEIGHT - percentage * TOP_SCREEN_HEIGHT, 0, TOP_SCREEN_WIDTH, TOP_SCREEN_HEIGHT, colour_black);
+				C2D_DrawRectSolid(0, height - percentage * height, 0, width, height, colour_black);
 				if (transition_forwards) {
 					transition_timer++;
 				} else {
@@ -90,7 +98,7 @@ void transition() {
 			case TRANSITION_TYPE_SWIPE_DOWN:
 				scale = 5;
 				percentage = lerp(percentage, transition_lerp);
-				C2D_DrawRectSolid(0, 0, 0, TOP_SCREEN_WIDTH, percentage * TOP_SCREEN_HEIGHT, colour_black);
+				C2D_DrawRectSolid(0, 0, 0, width, percentage * height, colour_black);
 				if (transition_forwards) {
 					transition_timer++;
 				} else {

@@ -13,4 +13,4 @@ extern game_state after_transition;
 extern lerp_function transition_lerp;
 extern transition_type trans_type;
 
-void transition();
+void transition(bool top);

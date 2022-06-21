@@ -85,10 +85,26 @@ void delay() {
 	}
 }
 
+C2D_Sprite *getCardSprite(card_suit suit, card_value value) {
+	int idx;
+	if (value < CARD_JACK) {
+		idx = 1 + value * 4 + suit;
+	} else if (value == CARD_JACK) {
+		idx = 46 + suit;
+	} else if (value == CARD_JOKER) {
+		idx = 50;
+	} else if (value == CARD_KING) {
+		idx = 50 + suit;
+	} else if (value == CARD_QUEEN) {
+		idx = 54 + suit;
+	}
+	return &sprites[idx];
+}
+
 void spriteInit() {
 	size_t num_images = C2D_SpriteSheetCount(sprite_sheet);
 	for (int i = 0; i < num_images; i++) {
-		C2D_SpriteFromSheet(&sprites[i], sprite_sheet, 0);
+		C2D_SpriteFromSheet(&sprites[i], sprite_sheet, i);
 		C2D_SpriteSetCenter(&sprites[i], 0.5, 0.5);
 		C2D_SpriteSetPos(&sprites[i], 0, 0);
 		C2D_SpriteSetRotation(&sprites[i], 0);
@@ -162,19 +178,38 @@ int main(int argc, char* argv[]) {
 
 		switch (state) {
 			case GAME_STATE_TITLE:
-				titlescreen();
+				titlescreen(true);
 				break;
 			case GAME_STATE_MAIN_MENU:
-				mainmenu();
+				mainmenu(true);
 				break;
 			case GAME_STATE_OPTIONS:
-				optionsmenu();
+				optionsmenu(true);
 				break;
 			default:
 				break;
 		}
 
-		transition();
+		transition(true);
+
+		C2D_TargetClear(bottom, colour_clear);
+		C2D_SceneBegin(bottom);
+
+		switch (state) {
+			case GAME_STATE_TITLE:
+				titlescreen(false);
+				break;
+			case GAME_STATE_MAIN_MENU:
+				mainmenu(false);
+				break;
+			case GAME_STATE_OPTIONS:
+				optionsmenu(false);
+				break;
+			default:
+				break;
+		}
+
+		transition(false);
 
 		C3D_FrameEnd(0);
 		delay();

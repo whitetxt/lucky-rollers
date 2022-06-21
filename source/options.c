@@ -8,7 +8,8 @@ char *optionsitems[3] = {
 	"Go Back",
 };
 
-void optionsmenu() {
+void optionsmenu(bool top) {
+	if (!top) return;
 	u32 kDown = hidKeysDown();
 
 	if (kDown & KEY_A) {
@@ -30,7 +31,7 @@ void optionsmenu() {
 		selectedOptionOption--;
 	}
 
-	draw_text("Lucky Rollers", TOP_SCREEN_WIDTH / 2, 24);
+	draw_text("Options Menu", TOP_SCREEN_WIDTH / 2, 24);
 
 	float offset = (TOP_SCREEN_HEIGHT - 64 - 48) / (optionsOptions - 1);
 	for (int i = 0; i < optionsOptions; i++) {

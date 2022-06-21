@@ -8,7 +8,8 @@ char *mainmenuitems[3] = {
 	"Quit to Main Menu",
 };
 
-void mainmenu() {
+void mainmenu(bool top) {
+	if (!top) return;
 	u32 kDown = hidKeysDown();
 
 	if (kDown & KEY_A) {
