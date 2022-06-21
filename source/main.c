@@ -102,6 +102,7 @@ inline void setState(game_state new_state) {
 }
 
 inline void transitionState(game_state new_state, transition_type type, int frames, lerp_function trans_lerp) {
+	if (transition_timer != 0) return;
 	transition_timer = 1;
 	transition_duration = frames;
 	after_transition = new_state;
@@ -165,6 +166,9 @@ int main(int argc, char* argv[]) {
 				break;
 			case GAME_STATE_MAIN_MENU:
 				mainmenu();
+				break;
+			case GAME_STATE_OPTIONS:
+				optionsmenu();
 				break;
 			default:
 				break;

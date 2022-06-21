@@ -45,7 +45,6 @@ void transition() {
 			case TRANSITION_TYPE_SWIPE_LEFT:
 				scale = 5;
 				percentage = lerp(percentage, transition_lerp);
-				offset = 32 * (scale - (percentage * scale));
 				C2D_DrawRectSolid(TOP_SCREEN_WIDTH - (percentage) * TOP_SCREEN_WIDTH, 0, 0, TOP_SCREEN_WIDTH, TOP_SCREEN_HEIGHT, colour_black);
 				if (transition_forwards) {
 					transition_timer++;
@@ -61,7 +60,6 @@ void transition() {
 			case TRANSITION_TYPE_SWIPE_RIGHT:
 				scale = 5;
 				percentage = lerp(percentage, transition_lerp);
-				offset = 32 * (scale - (percentage * scale));
 				C2D_DrawRectSolid(0, 0, 0, (percentage) * TOP_SCREEN_WIDTH, TOP_SCREEN_HEIGHT, colour_black);
 				if (transition_forwards) {
 					transition_timer++;
@@ -77,7 +75,6 @@ void transition() {
 			case TRANSITION_TYPE_SWIPE_UP:
 				scale = 5;
 				percentage = lerp(percentage, transition_lerp);
-				offset = 32 * (scale - (percentage * scale));
 				C2D_DrawRectSolid(0, TOP_SCREEN_HEIGHT - percentage * TOP_SCREEN_HEIGHT, 0, TOP_SCREEN_WIDTH, TOP_SCREEN_HEIGHT, colour_black);
 				if (transition_forwards) {
 					transition_timer++;
@@ -93,7 +90,6 @@ void transition() {
 			case TRANSITION_TYPE_SWIPE_DOWN:
 				scale = 5;
 				percentage = lerp(percentage, transition_lerp);
-				offset = 32 * (scale - (percentage * scale));
 				C2D_DrawRectSolid(0, 0, 0, TOP_SCREEN_WIDTH, percentage * TOP_SCREEN_HEIGHT, colour_black);
 				if (transition_forwards) {
 					transition_timer++;

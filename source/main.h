@@ -26,8 +26,9 @@ typedef enum sprite {
 } sprite;
 
 typedef enum game_state {
-	GAME_STATE_TITLE = 0,
-	GAME_STATE_MAIN_MENU = 1,
+	GAME_STATE_TITLE,
+	GAME_STATE_MAIN_MENU,
+	GAME_STATE_OPTIONS
 } game_state;
 
 typedef struct point {
@@ -46,6 +47,7 @@ typedef struct line {
 
 #include "title.h"
 #include "mainmenu.h"
+#include "options.h"
 
 extern C3D_RenderTarget *top;
 extern C3D_RenderTarget *bottom;

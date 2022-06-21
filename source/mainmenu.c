@@ -11,16 +11,15 @@ char *mainmenuitems[3] = {
 void mainmenu() {
 	u32 kDown = hidKeysDown();
 
-	float x_offset = 0;
-
 	if (kDown & KEY_A) {
 		switch (selectedMenuOption) {
 			case 0:
 				break;
 			case 1:
+				transitionState(GAME_STATE_OPTIONS, TRANSITION_TYPE_SWIPE_LEFT, seconds(1), EASE_IN_EXPO);
 				break;
 			case 2:
-				transitionState(GAME_STATE_TITLE, TRANSITION_TYPE_CIRCLE, seconds(1), EASE_IN_CIRC);
+				transitionState(GAME_STATE_TITLE, TRANSITION_TYPE_CIRCLE, seconds(1.5), EASE_IN_CIRC);
 				break;
 			default:
 				break;
