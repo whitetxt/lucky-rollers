@@ -2,6 +2,8 @@ typedef enum transition_type {
 	TRANSITION_TYPE_CIRCLE,
 	TRANSITION_TYPE_SWIPE_LEFT,
 	TRANSITION_TYPE_SWIPE_RIGHT,
+	TRANSITION_TYPE_SWIPE_UP,
+	TRANSITION_TYPE_SWIPE_DOWN,
 } transition_type;
 
 extern int transition_timer;

@@ -77,12 +77,12 @@ void init_sprites() {
 
 void delay() {
 	frame_num++;
-	/*now_time = osGetTime();
+	now_time = osGetTime();
 	u64 frame_time = now_time - last_time;
 	last_time = now_time;
 	if (frame_time < MS_PER_FRAME) {
 		svcSleepThread(MS_PER_FRAME - frame_time);
-	}*/
+	}
 }
 
 void spriteInit() {
