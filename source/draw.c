@@ -47,6 +47,7 @@ void cacheText(C2D_Text t, char *text) {
 		for (int i = found; i > 0; i--) {
 			cached[i] = cached[i - 1];
 		}
+
 		cached[0].t = t;
 		free(cached[0].text);
 		cached[0].text = strdup(text);
@@ -61,39 +62,20 @@ void cacheText(C2D_Text t, char *text) {
  * @param x X Position
  * @param y Y Position
  */
-void draw_text(char *text, int x, int y) {
+void draw_text_raw(char *text, int x, int y, float x_scale, float y_scale, int flags, u32 colour) {
 	Text *found = searchForCachedText(text);
 	float w, h;
 	if (!found) {
 		C2D_TextBuf buf = C2D_TextBufNew(strlen(text));
 		C2D_Text text_c2d;
 		C2D_TextFontParse(&text_c2d, font, buf, text);
-		C2D_TextGetDimensions(&text_c2d, 1, 1, &w, &h);
+		C2D_TextGetDimensions(&text_c2d, x_scale, y_scale, &w, &h);
 		C2D_TextOptimize(&text_c2d);
-		C2D_DrawText(&text_c2d, 0, x - w / 2, y - h / 2, 0, 1, 1);
+		C2D_DrawText(&text_c2d, C2D_WithColor | flags, x - w / 2, y - h / 2, 0, x_scale, y_scale, colour);
 		cacheText(text_c2d, text);
 	} else {
-		C2D_TextGetDimensions(&found->t, 1, 1, &w, &h);
-		C2D_DrawText(&found->t, 0, x - w / 2, y - h / 2, 0, 1, 1);
+		C2D_TextGetDimensions(&found->t, x_scale, y_scale, &w, &h);
+		C2D_DrawText(&found->t, C2D_WithColor | flags, x - w / 2, y - h / 2, 0, x_scale, y_scale, colour);
 		cacheText(found->t, text);
 	}
-}
-
-/**
- * @brief Draws text with a specified colour.
- * 
- * @param text Text to draw
- * @param x X Position
- * @param y Y Position
- * @param colour Colour to draw as
- */
-void draw_text_colour(char *text, int x, int y, u32 colour) {
-	float w, h;
-	C2D_TextBuf buf = C2D_TextBufNew(strlen(text));
-	C2D_Text text_c2d;
-	C2D_TextFontParse(&text_c2d, font, buf, text);
-	C2D_TextGetDimensions(&text_c2d, 1, 1, &w, &h);
-	C2D_TextOptimize(&text_c2d);
-	C2D_DrawText(&text_c2d, C2D_WithColor, x - w / 2, y - h / 2, 0, 1, 1, colour);
-	C2D_TextBufDelete(buf);
 }

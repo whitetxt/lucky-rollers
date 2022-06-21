@@ -28,7 +28,8 @@ typedef enum sprite {
 typedef enum game_state {
 	GAME_STATE_TITLE,
 	GAME_STATE_MAIN_MENU,
-	GAME_STATE_OPTIONS
+	GAME_STATE_OPTIONS,
+	GAME_STATE_IN_GAME,
 } game_state;
 
 typedef enum card_suit {
@@ -69,6 +70,8 @@ typedef struct line {
 #include "draw.h"
 #include "transitions.h"
 
+#include "game.h"
+
 #include "title.h"
 #include "mainmenu.h"
 #include "options.h"
@@ -79,6 +82,7 @@ extern C2D_Font font;
 extern C2D_SpriteSheet sprite_sheet;
 
 extern game_state state;
+extern game_state previous_state;
 
 extern int frame_num;
 extern int since_state_change;

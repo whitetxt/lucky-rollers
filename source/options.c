@@ -31,10 +31,15 @@ void optionsmenu(bool top) {
 		selectedOptionOption--;
 	}
 
-	draw_text("Options Menu", TOP_SCREEN_WIDTH / 2, 24);
+	float xoffset = 0;
+	if (transition_timer != 0 && (previous_state == GAME_STATE_MAIN_MENU || transition_forwards)) {
+		xoffset = (TOP_SCREEN_WIDTH / 10) * lerp((transition_timer / (float)transition_duration), EASE_IN_EXPO);
+	}
+
+	draw_text("Options Menu", TOP_SCREEN_WIDTH / 2 + xoffset, 24);
 
 	float offset = (TOP_SCREEN_HEIGHT - 64 - 48) / (optionsOptions - 1);
 	for (int i = 0; i < optionsOptions; i++) {
-		draw_text_colour(optionsitems[i], TOP_SCREEN_WIDTH / 2, 64 + offset * i, i == selectedOptionOption ? C2D_Color32(0x38, 0xa3, 0xa5, 0xff) : C2D_Color32(0x9d, 0x02, 0x08, 0xff));
+		draw_text_colour(optionsitems[i], TOP_SCREEN_WIDTH / 2 + xoffset, 64 + offset * i, i == selectedOptionOption ? C2D_Color32(0x38, 0xa3, 0xa5, 0xff) : C2D_Color32(0x9d, 0x02, 0x08, 0xff));
 	}
 }

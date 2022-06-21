@@ -10,6 +10,7 @@ C2D_SpriteSheet sprite_sheet;
 C2D_Sprite sprites[MAX_SPRITES];
 
 game_state state = GAME_STATE_TITLE;
+game_state previous_state;
 
 int frame_num = 0;
 int since_state_change = 0;
@@ -113,6 +114,7 @@ void spriteInit() {
 }
 
 inline void setState(game_state new_state) {
+	previous_state = state;
 	state = new_state;
 	since_state_change = 0;
 }
@@ -167,10 +169,6 @@ int main(int argc, char* argv[]) {
 	// Main loop
 	while (aptMainLoop()) {
 		hidScanInput();
-		u32 kDown = hidKeysDown();
-		if ((kDown & KEY_L) && (kDown & KEY_R)) { // L + R to quit
-			break; // break in order to return to hbmenu
-		}
 
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 		C2D_TargetClear(top, colour_clear);
@@ -186,6 +184,8 @@ int main(int argc, char* argv[]) {
 			case GAME_STATE_OPTIONS:
 				optionsmenu(true);
 				break;
+			case GAME_STATE_IN_GAME:
+
 			default:
 				break;
 		}
@@ -205,6 +205,7 @@ int main(int argc, char* argv[]) {
 			case GAME_STATE_OPTIONS:
 				optionsmenu(false);
 				break;
+			case GAME_STATE_IN_GAME:
 			default:
 				break;
 		}
