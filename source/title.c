@@ -2,14 +2,15 @@
 
 bool initialised = false;
 
-title_card cards[32];
-int max_vel = 64;
-int max_rot_vel = 100;
+TitleCard cards[64];
+int max_cards = 64;
+int max_vel = 100;
+int max_rot_vel = 150;
 
 void titlescreen(bool top) {
 	if (top) {
 		if (!initialised) {
-			for (int i = 0; i < 16; i++) {
+			for (int i = 0; i < max_cards / 2; i++) {
 				cards[i].suit = rand() % 4;
 				cards[i].value = rand() % 14;
 				cards[i].position.x = rand() % TOP_SCREEN_WIDTH;
@@ -18,7 +19,7 @@ void titlescreen(bool top) {
 				cards[i].vel.x = rand() % max_vel - max_vel / 2;
 				cards[i].vel.y = rand() % max_vel - max_vel / 2;
 			}
-			for (int i = 16; i < 32; i++) {
+			for (int i = max_cards / 2; i < max_cards; i++) {
 				cards[i].suit = rand() % 4;
 				cards[i].value = rand() % 14;
 				cards[i].position.x = rand() % BOTTOM_SCREEN_WIDTH;
@@ -42,7 +43,7 @@ void titlescreen(bool top) {
 
 		draw_text("Lucky Rollers", TOP_SCREEN_WIDTH / 2, TOP_SCREEN_HEIGHT / 2 + sin(frame_num / 20.0f) * 8);
 
-		for (int i = 0; i < 16; i++) {
+		for (int i = 0; i < max_cards / 2; i++) {
 			C2D_SetTintMode(C2D_TintMult);
 			C2D_ImageTint tint;
 			C2D_AlphaImageTint(&tint, 0.05);
@@ -71,7 +72,7 @@ void titlescreen(bool top) {
 			}
 		}
 	} else {
-		for (int i = 16; i < 32; i++) {
+		for (int i = max_cards / 2; i < max_cards; i++) {
 			C2D_SetTintMode(C2D_TintMult);
 			C2D_ImageTint tint;
 			C2D_AlphaImageTint(&tint, 0.05);

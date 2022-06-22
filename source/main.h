@@ -67,11 +67,13 @@ extern int transition_timer;
 
 extern bool paused;
 
+extern C2D_Sprite *backCard;
 extern C2D_Sprite *blankCard;
+extern C2D_Sprite *jokerCard;
 
 C2D_Sprite get_sprite(int idx);
 C2D_Sprite *get_sprite_ptr(int idx);
-C2D_Sprite *getCardSprite(title_card_suit suit, title_card_value value);
+C2D_Sprite *getCardSprite(CardSuit suit, CardValue value);
 
 bool inside_tri(point p, point tri_1, point tri_2, point tri_3);
 bool inside_rect(point p, point top_left, int w, int h);
@@ -83,6 +85,3 @@ void setState(game_state new_state);
 void transitionState(game_state new_state, transition_type type, int frames, lerp_function trans_lerp);
 float dist(point a, point b);
 float dist_sq(point a, point b);
-
-title_card_value valueToTitle(CardValue value);
-title_card_suit suitToTitle(CardSuit suit);

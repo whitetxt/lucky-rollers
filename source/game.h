@@ -20,6 +20,7 @@ typedef enum CardSuit {
 	CARD_HEARTS = 1,
 	CARD_DIAMONDS = 2,
 	CARD_CLUBS = 3,
+	CARD_SJOKER = -1,
 } CardSuit;
 
 typedef struct ActionCard {

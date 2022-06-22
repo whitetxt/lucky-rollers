@@ -87,8 +87,12 @@ void delay() {
 }
 
 C2D_Sprite *getCardSprite(CardSuit suit, CardValue value) {
-	int idx = 1 + (value - 1) * 4 + suit;
-	return &sprites[idx];
+	if (value != CARD_JOKER || suit != CARD_SJOKER) {
+		int idx = 1 + value * 4 + suit;
+		return &sprites[idx];
+	} else {
+		return jokerCard;
+	}
 }
 
 void spriteInit() {
@@ -100,6 +104,9 @@ void spriteInit() {
 		C2D_SpriteSetRotation(&sprites[i], 0);
 		C2D_SpriteSetScale(&sprites[i], 1, 1);
 	}
+	backCard = &sprites[53];
+	blankCard = &sprites[54];
+	jokerCard = &sprites[55];
 }
 
 
@@ -135,7 +142,9 @@ inline float dist_sq(point a, point b) {
 	return pow(a.x - b.x, 2) + pow(a.y - b.y, 2);
 }
 
+C2D_Sprite *backCard;
 C2D_Sprite *blankCard;
+C2D_Sprite *jokerCard;
 
 int main(int argc, char* argv[]) {
 	srand(time(NULL));
