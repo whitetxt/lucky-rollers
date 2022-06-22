@@ -2,7 +2,7 @@
 
 bool initialised = false;
 
-card cards[32];
+title_card cards[32];
 int max_vel = 64;
 int max_rot_vel = 100;
 

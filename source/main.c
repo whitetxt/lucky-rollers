@@ -86,20 +86,68 @@ void delay() {
 	}
 }
 
-C2D_Sprite *getCardSprite(card_suit suit, card_value value) {
+C2D_Sprite *getCardSprite(title_card_suit suit, title_card_value value) {
 	int idx;
-	if (value < CARD_JACK) {
+	if (value < TITLE_CARD_JACK) {
 		idx = 1 + value * 4 + suit;
-	} else if (value == CARD_JACK) {
-		idx = 46 + suit;
-	} else if (value == CARD_JOKER) {
-		idx = 50;
-	} else if (value == CARD_KING) {
-		idx = 50 + suit;
-	} else if (value == CARD_QUEEN) {
-		idx = 54 + suit;
+	} else if (value == TITLE_CARD_JACK) {
+		idx = 43 + suit;
+	} else if (value == TITLE_CARD_JOKER) {
+		idx = 47;
+	} else if (value == TITLE_CARD_KING) {
+		idx = 47 + suit;
+	} else if (value == TITLE_CARD_QUEEN) {
+		idx = 51 + suit;
 	}
 	return &sprites[idx];
+}
+
+title_card_value valueToTitle(CardValue value) {
+	switch (value) {
+		case CARD_ACE:
+			return TITLE_CARD_ACE;
+		case CARD_2:
+			return TITLE_CARD_2;
+		case CARD_3:
+			return TITLE_CARD_3;
+		case CARD_4:
+			return TITLE_CARD_4;
+		case CARD_5:
+			return TITLE_CARD_5;
+		case CARD_6:
+			return TITLE_CARD_6;
+		case CARD_7:
+			return TITLE_CARD_7;
+		case CARD_8:
+			return TITLE_CARD_8;
+		case CARD_9:
+			return TITLE_CARD_9;
+		case CARD_10:
+			return TITLE_CARD_10;
+		case CARD_JACK:
+			return TITLE_CARD_JACK;
+		case CARD_QUEEN:
+			return TITLE_CARD_QUEEN;
+		case CARD_KING:
+			return TITLE_CARD_KING;
+		case CARD_JOKER:
+			return TITLE_CARD_JOKER;
+	}
+	return TITLE_CARD_2;
+}
+
+title_card_suit suitToTitle(CardSuit suit) {
+	switch (suit) {
+		case CARD_CLUBS:
+			return CLUBS;
+		case CARD_DIAMONDS:
+			return DIAMONDS;
+		case CARD_SPADES:
+			return SPADES;
+		case CARD_HEARTS:
+			return HEARTS;
+	}
+	return CLUBS;
 }
 
 void spriteInit() {
@@ -111,7 +159,9 @@ void spriteInit() {
 		C2D_SpriteSetRotation(&sprites[i], 0);
 		C2D_SpriteSetScale(&sprites[i], 1, 1);
 	}
+	blankCard = &sprites[40];
 }
+
 
 inline void setState(game_state new_state) {
 	previous_state = state;
@@ -144,6 +194,8 @@ inline float dist(point a, point b) {
 inline float dist_sq(point a, point b) {
 	return pow(a.x - b.x, 2) + pow(a.y - b.y, 2);
 }
+
+C2D_Sprite *blankCard;
 
 int main(int argc, char* argv[]) {
 	srand(time(NULL));
@@ -185,7 +237,8 @@ int main(int argc, char* argv[]) {
 				optionsmenu(true);
 				break;
 			case GAME_STATE_IN_GAME:
-
+				game(true);
+				break;
 			default:
 				break;
 		}
@@ -206,6 +259,8 @@ int main(int argc, char* argv[]) {
 				optionsmenu(false);
 				break;
 			case GAME_STATE_IN_GAME:
+				game(false);
+				break;
 			default:
 				break;
 		}

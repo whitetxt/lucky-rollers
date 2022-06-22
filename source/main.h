@@ -32,30 +32,6 @@ typedef enum game_state {
 	GAME_STATE_IN_GAME,
 } game_state;
 
-typedef enum card_suit {
-	CLUBS = 1,
-	DIAMONDS = 2,
-	HEARTS = 3,
-	SPADES = 4,
-} card_suit;
-
-typedef enum card_value {
-	CARD_10 = 0,
-	CARD_2 = 1,
-	CARD_3 = 2,
-	CARD_4 = 3,
-	CARD_5 = 4,
-	CARD_6 = 5,
-	CARD_7 = 6,
-	CARD_8 = 7,
-	CARD_9 = 8,
-	CARD_ACE = 9,
-	CARD_JACK = 10,
-	CARD_KING = 11,
-	CARD_QUEEN = 12,
-	CARD_JOKER = 13,
-} card_value;
-
 typedef struct point {
 	float x, y;
 } point;
@@ -91,9 +67,11 @@ extern int transition_timer;
 
 extern bool paused;
 
+extern C2D_Sprite *blankCard;
+
 C2D_Sprite get_sprite(int idx);
 C2D_Sprite *get_sprite_ptr(int idx);
-C2D_Sprite *getCardSprite(card_suit suit, card_value value);
+C2D_Sprite *getCardSprite(title_card_suit suit, title_card_value value);
 
 bool inside_tri(point p, point tri_1, point tri_2, point tri_3);
 bool inside_rect(point p, point top_left, int w, int h);
@@ -105,3 +83,6 @@ void setState(game_state new_state);
 void transitionState(game_state new_state, transition_type type, int frames, lerp_function trans_lerp);
 float dist(point a, point b);
 float dist_sq(point a, point b);
+
+title_card_value valueToTitle(CardValue value);
+title_card_suit suitToTitle(CardSuit suit);
