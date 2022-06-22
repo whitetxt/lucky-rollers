@@ -86,68 +86,9 @@ void delay() {
 	}
 }
 
-C2D_Sprite *getCardSprite(title_card_suit suit, title_card_value value) {
-	int idx;
-	if (value < TITLE_CARD_JACK) {
-		idx = 1 + value * 4 + suit;
-	} else if (value == TITLE_CARD_JACK) {
-		idx = 43 + suit;
-	} else if (value == TITLE_CARD_JOKER) {
-		idx = 47;
-	} else if (value == TITLE_CARD_KING) {
-		idx = 47 + suit;
-	} else if (value == TITLE_CARD_QUEEN) {
-		idx = 51 + suit;
-	}
+C2D_Sprite *getCardSprite(CardSuit suit, CardValue value) {
+	int idx = 1 + (value - 1) * 4 + suit;
 	return &sprites[idx];
-}
-
-title_card_value valueToTitle(CardValue value) {
-	switch (value) {
-		case CARD_ACE:
-			return TITLE_CARD_ACE;
-		case CARD_2:
-			return TITLE_CARD_2;
-		case CARD_3:
-			return TITLE_CARD_3;
-		case CARD_4:
-			return TITLE_CARD_4;
-		case CARD_5:
-			return TITLE_CARD_5;
-		case CARD_6:
-			return TITLE_CARD_6;
-		case CARD_7:
-			return TITLE_CARD_7;
-		case CARD_8:
-			return TITLE_CARD_8;
-		case CARD_9:
-			return TITLE_CARD_9;
-		case CARD_10:
-			return TITLE_CARD_10;
-		case CARD_JACK:
-			return TITLE_CARD_JACK;
-		case CARD_QUEEN:
-			return TITLE_CARD_QUEEN;
-		case CARD_KING:
-			return TITLE_CARD_KING;
-		case CARD_JOKER:
-			return TITLE_CARD_JOKER;
-	}
-	return TITLE_CARD_2;
-}
-
-title_card_suit suitToTitle(CardSuit suit) {
-	switch (suit) {
-		case CARD_CLUBS:
-			return CLUBS;
-		case CARD_DIAMONDS:
-			return DIAMONDS;
-		case CARD_SPADES:
-			return SPADES;
-		case CARD_HEARTS:
-			return HEARTS;
-	}
-	return CLUBS;
 }
 
 void spriteInit() {
@@ -159,7 +100,6 @@ void spriteInit() {
 		C2D_SpriteSetRotation(&sprites[i], 0);
 		C2D_SpriteSetScale(&sprites[i], 1, 1);
 	}
-	blankCard = &sprites[40];
 }
 
 
